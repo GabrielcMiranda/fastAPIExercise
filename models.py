@@ -9,6 +9,7 @@ class User(Base):
     name = Column(String)
     favoriteMusics = relationship('Music', backref='user')
 
+#do jeito que ta, a relacao fica de um pra muitos, ou seja, uma instancia de musica nao pode ser salva por mais de um usuario
 class Music(Base):
     __tablename__ = 'music'
     id = Column(Integer, primary_key=True, autoincrement=True)
