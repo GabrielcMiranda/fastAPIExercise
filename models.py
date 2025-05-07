@@ -1,19 +1,25 @@
-from sqlalchemy import Column, Integer, Double, String, ForeignKey
+from sqlalchemy import Column, Integer, Double, String, ForeignKey, Table
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
 
+user_music = Table(
+        'user_music',
+        Base.metadata,
+        Column('user_id',Integer, ForeignKey('user.id'),primary_key=True),
+        Column('music_id',Integer,ForeignKey('music.id'),primary_key=True)
+    )
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key = True, autoincrement=True)
     name = Column(String)
-    favoriteMusics = relationship('Music', backref='user')
-
-#do jeito que ta, a relacao fica de um pra muitos, ou seja, uma instancia de musica nao pode ser salva por mais de um usuario
+    favoriteMusics = relationship('Music', secondary=user_music, back_populates="listeners")
 class Music(Base):
     __tablename__ = 'music'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     duration = Column(Double)
     composer = Column(String)
-    user_id = Column(Integer, ForeignKey('user.id'))
+    listeners = relationship('User', secondary=user_music, back_populates='favoriteMusics')
+
+   

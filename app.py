@@ -1,5 +1,5 @@
-from typing import Union
 from fastapi import FastAPI
+from views import user_router, assets_router
 import uvicorn
 
 app = FastAPI()
@@ -9,6 +9,9 @@ def home():
     return {
         'hello' : 'world'
     }
+
+app.include_router(user_router)
+app.include_router(assets_router)
 
 if __name__ == "__main__":
 
