@@ -1,5 +1,5 @@
 from asyncio import run
-
+from sqlalchemy import text
 from connection import engine
 from models import Base
 
