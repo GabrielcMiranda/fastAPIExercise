@@ -7,4 +7,4 @@ load_dotenv()
 url = getenv('DATABASE_URL')
 
 engine = create_async_engine(url)
-session = sessionmaker(engine, Class=AsyncSession)
+session = sessionmaker(engine, class_=AsyncSession)

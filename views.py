@@ -14,9 +14,9 @@ async def create_user(user_input: UserCreateInput):
         raise HTTPException(400,detail=str(error))
 
 @user_router.delete('/delete',description='delete um usuario pelo id', response_model = StandartOutput, responses={400:{'model':ErrorOutput}})
-async def delete_user(user_input = UserIdInput):
+async def delete_user(input_id: int):
     try:
-        await UserService.delete_user(id=user_input.id)
+        await UserService.delete_user(id=input_id)
         return StandartOutput(message='ok')
     except Exception as error:
         raise HTTPException(400,detail=str(error))
