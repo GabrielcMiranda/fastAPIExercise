@@ -1,5 +1,6 @@
 from fastapi import FastAPI
-from views import user_router, song_router
+from user_views import user_router
+from song_views import song_router
 import uvicorn
 
 app = FastAPI()

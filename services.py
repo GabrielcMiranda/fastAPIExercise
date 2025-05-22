@@ -35,6 +35,22 @@ class UserService:
                 user.liked_songs.append(song)
                 await sessao.commit()
 
+    async def update_username(user_id: int, new_name: str):
+        async with session() as sessao:
+            result = await sessao.execute(select(User).where(User.id == user_id))
+            user = result.scalar_one_or_none()
+
+            if not user:
+                raise Exception("usuario nao encontrado")
+            
+            user.name = new_name
+            await sessao.commit()
+
+    async def list_users():
+        async with session() as sessao:
+            result = await sessao.execute(select(User))
+            return result.scalars().all()
+
 
 class SongService:
     async def create_song(name,duration,composer):
@@ -51,3 +67,8 @@ class SongService:
         async with session() as sessao:
             result = await sessao.execute(select(Song).options(selectinload(Song.liked_by)).where(Song.id == id))
             return result.scalar_one_or_none()
+        
+    async def list_songs():
+        async with session() as sessao:
+            result = await sessao.execute(select(Song))
+            return result.scalars().all()
