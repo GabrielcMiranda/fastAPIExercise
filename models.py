@@ -13,13 +13,13 @@ class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key = True, autoincrement=True)
     name = Column(String)
-    liked_songs = relationship('Song', secondary=user_song, back_populates="liked_by")
+    liked_songs = relationship('Song', secondary=user_song, back_populates="liked_by", lazy='subquery')
 class Song(Base):
     __tablename__ = 'song'
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String)
     duration = Column(Double)
     composer = Column(String)
-    liked_by = relationship('User', secondary=user_song, back_populates='liked_songs')
+    liked_by = relationship('User', secondary=user_song, back_populates='liked_songs', lazy='subquery')
 
    
